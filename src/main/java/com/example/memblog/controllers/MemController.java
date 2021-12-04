@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 //todo определиться маппингами (ссылками) и написать парсер для мемов
 @RestController
 @RequestMapping("/memes")
@@ -29,7 +31,7 @@ public class MemController {
     }
 
     @PostMapping
-    public ResponseEntity saveMeme(@RequestBody MemEntity meme) {
+    public ResponseEntity saveMeme(@RequestBody List<MemEntity> meme) {
         try {
             memeService.saveMeme(meme);
             return ResponseEntity.ok("done");
@@ -38,19 +40,5 @@ public class MemController {
             return ResponseEntity.badRequest().body("goes wrong");
         }
     }
-
-
-
-    /*
-    @DeleteMapping("/{id}")
-    public ResponseEntity deleteMeme(@PathVariable("id") Long id) {
-        try {
-            memeService.deleteMeme(id);
-            return ResponseEntity.ok("deleted");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().body("goes wrong");
-        }
-    } */
 
 }
