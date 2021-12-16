@@ -20,10 +20,10 @@ public class MemController {
         this.memeService = memeService;
     }
 
-    @GetMapping
-    public ResponseEntity getMainPage() {
+    @GetMapping("/{pageNum}")
+    public ResponseEntity getMemes(@PathVariable int pageNum) {
         try {
-            return ResponseEntity.ok("working");
+            return ResponseEntity.ok(memeService.getMemes(pageNum));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().body("goes wrong");
@@ -31,9 +31,9 @@ public class MemController {
     }
 
     @PostMapping
-    public ResponseEntity saveMeme(@RequestBody List<MemEntity> meme) {
+    public ResponseEntity saveMemes(@RequestBody List<MemEntity> meme) {
         try {
-            memeService.saveMeme(meme);
+            memeService.saveMemes(meme);
             return ResponseEntity.ok("done");
         } catch (Exception e) {
             e.printStackTrace();

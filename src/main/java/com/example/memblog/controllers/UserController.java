@@ -19,8 +19,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    //todo при создании пользователя должен создаваться и список сохраненок
-
     @PostMapping("/newuser")
     public ResponseEntity saveUser(@RequestBody UserEntity user){
         try {

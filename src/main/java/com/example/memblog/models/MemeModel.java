@@ -17,6 +17,18 @@ public class MemeModel {
         return meme;
     }
 
+    public static MemeModel setModel(String ref, int len, int wid){
+        MemeModel meme = new MemeModel();
+        meme.setReference(ref);
+        meme.setLength(len);
+        meme.setWidth(wid);
+        return meme;
+    }
+
+    @Override
+    public String toString(){
+        return reference + " : " + length + " : " + width;
+    }
 
 
     public Long getId() {
