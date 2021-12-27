@@ -38,7 +38,8 @@ public class UserService {
         if(!Objects.equals(userRepo.findByUsername(user.getUsername()).get().getPassword(), user.getPassword())) {
             throw new UserIncorrectPassword("wrong password");
         }
-        return UserModel.toModel(user);
+        //fixme репозиторий не вызывается
+        return UserModel.toModel(userRepo.findByUsername(user.getUsername()).get());
     }
 
     public void deleteUser(Long id){

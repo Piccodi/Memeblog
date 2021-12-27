@@ -8,10 +8,11 @@ import com.example.memblog.repositories.MemeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.stream.Collectors;
 
-// todo добавить метод для добавления связки в liked memes
 @Service
 public class FavService {
 
@@ -22,11 +23,9 @@ public class FavService {
     private MemeRepo memeRepo;
 
     public void createFavList(FavMemEntity favMem){favRepo.save(favMem);}
-    //public Set<?> getFavMemes(Long id){favRepo.getAll}
-    //todo put in try catch and make some exceptions
+
     public void addToFav(Long user_id, Long mem_id){
         var favMem = favRepo.findByUserId(user_id).get();
-        //todo метод поиска в таблице связке
         var meme = memeRepo.findById(mem_id).get();
         meme.saveFav(favMem);
         memeRepo.save(meme);
@@ -42,17 +41,27 @@ public class FavService {
         favRepo.save(fav);
         memeRepo.save(mem);
     }
-    //fixme возможно надо и для всех мемов почистить
+
     public void deleteFavList(Long user_id){
         var fav = favRepo.findByUserId(user_id).get();
         fav.deleteAll();
         favRepo.save(fav);
         favRepo.deleteById(fav.getId());
     }
+    //fixme багует если сохраненки не в последовательности
+    public List<MemeModel> getAll(Long userId, int pageNum){
+        //var favMemes = favRepo.findByUserId(id).get().getFavMemes();
+        var favMemes = new ArrayList<MemEntity>();
+        var countSaves = favRepo.getSavesCount(userId).get();
 
-    public Set<MemeModel> getAll(Long id){
-        var favMemes = favRepo.findByUserId(id).get().getFavMemes();
-        return favMemes.stream().map(MemeModel::toModel).collect(Collectors.toSet());
+        var countPart = 2;
+        var startNum = pageNum * countPart;
+
+        var savedPart = favRepo.getSomeSaves(userId, startNum, countPart).get();
+        for (Long memeId: savedPart) {
+            favMemes.add(memeRepo.findById(memeId).get());
+        }
+        return favMemes.stream().map(MemeModel::toModel).collect(Collectors.toList());
     }
 
 }

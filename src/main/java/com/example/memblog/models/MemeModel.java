@@ -17,6 +17,7 @@ public class MemeModel {
         return meme;
     }
 
+    //not used
     public static MemeModel setModel(String ref, int len, int wid){
         MemeModel meme = new MemeModel();
         meme.setReference(ref);

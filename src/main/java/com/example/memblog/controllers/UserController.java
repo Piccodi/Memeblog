@@ -10,6 +10,7 @@ import static java.lang.Boolean.TRUE;
 
 //todo определиться маппингами (ссылками)
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
     private UserService userService;

@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-//todo определиться маппингами (ссылками)
 @RestController
 public class FavController {
 
@@ -40,10 +39,10 @@ public class FavController {
         }
     }
 
-    @GetMapping("/fav/{user_id}")
-    public ResponseEntity getFavs(@PathVariable("user_id") Long id){
+    @GetMapping("/fav/{user_id}/{pageNum}")
+    public ResponseEntity getFavs(@PathVariable("user_id") Long id, @PathVariable("pageNum") int num){
         try {
-            return ResponseEntity.ok(favService.getAll(id));
+            return ResponseEntity.ok(favService.getAll(id, num));
         }
         catch (Exception e){
             e.printStackTrace();
