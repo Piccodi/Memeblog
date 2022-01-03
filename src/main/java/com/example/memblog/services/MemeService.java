@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MemeService {
@@ -22,17 +23,10 @@ public class MemeService {
 
     }
     public List<MemeModel> getMemes(int pageNum){
-        var memes = new ArrayList<MemeModel>();
         var lastMeme = memeRepo.findNewestMeme().get();
-        var num = 30;
-        var startsNum = lastMeme.getId().intValue() - pageNum * num;
-        var endNum = lastMeme.getId().intValue() - pageNum * num - num;
-        if(endNum < 0)endNum = 0;
-        for(long i = lastMeme.getId().intValue() - pageNum * num; i > endNum; i--){
-            memes.add(MemeModel.toModel(memeRepo.findById(i).get()));
-        }
-
-        return memes;
+        var limit = 30;
+        var start = pageNum * limit;
+        return memeRepo.getPartMemes(start, limit).get().stream().map(MemeModel::toModel).collect(Collectors.toList());
     }
     public String findLastImage(){
         return memeRepo.findNewestMeme().get().getReference();

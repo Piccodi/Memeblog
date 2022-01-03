@@ -48,13 +48,12 @@ public class FavService {
         favRepo.save(fav);
         favRepo.deleteById(fav.getId());
     }
-    //fixme багует если сохраненки не в последовательности
+
     public List<MemeModel> getAll(Long userId, int pageNum){
-        //var favMemes = favRepo.findByUserId(id).get().getFavMemes();
         var favMemes = new ArrayList<MemEntity>();
         var countSaves = favRepo.getSavesCount(userId).get();
 
-        var countPart = 2;
+        var countPart = 30;
         var startNum = pageNum * countPart;
 
         var savedPart = favRepo.getSomeSaves(userId, startNum, countPart).get();

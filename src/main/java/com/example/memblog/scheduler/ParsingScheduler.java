@@ -17,7 +17,7 @@ public class ParsingScheduler {
 
     private boolean check = false;
 
-    @Scheduled(initialDelay = 3000, fixedRate = 120000)
+    @Scheduled(initialDelay = 3000, fixedRate = 600000)
     public void pingToStartParser(){
         if(check) {
             System.out.println("=");
