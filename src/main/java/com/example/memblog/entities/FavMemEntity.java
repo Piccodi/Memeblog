@@ -7,8 +7,6 @@ import java.util.Set;
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.GenerationType.IDENTITY;
 
-
-//todo возможно не нужен геттер на user ибо не безопасно и user_id не должен быть null
 @Entity
 public class FavMemEntity {
     @Id
